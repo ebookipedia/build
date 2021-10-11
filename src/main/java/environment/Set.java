@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class Set {
 
-	public static void variable(String key, String value) {
+	public static void variable(String key, Object value) {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(key, value);
+		result.put(key, value.toString());
 		variables(result);		
 	}
 	
