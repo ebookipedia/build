@@ -1,21 +1,19 @@
-name: Java CI
-
-on: [push]
-
+on:
+  push:
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
-
-steps:
-  - uses: actions/checkout@v2
-  - uses: actions/setup-java@v2
-    with:
-      java-version: '8'
-      distribution: 'temurin'
-      cache: maven
-  - run: mvn --batch-mode --update-snapshots verify
-  - run: cp target/*.jar docs
-  - uses: actions/upload-artifact@v2
-    with:
-      name: Package
-      path: docs
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        cache: maven
+    - run: mvn --batch-mode --update-snapshots verify
+    - run: cp target/*.jar docs
+    - uses: actions/upload-artifact@v2
+      with:
+         name: Package
+         path: docs
