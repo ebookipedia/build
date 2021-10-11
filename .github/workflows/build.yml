@@ -20,6 +20,6 @@ jobs:
     - run: |
         git config --global user.name 'Santiago Ruiz'
         git config --global user.email 'hiebra@hotmail.com'
-        git add target/build.jar
+        git add docs/build.jar
         git commit -am "Automated build"
-        git push origin
+        git push
