@@ -6,9 +6,10 @@ public class Wikipedia {
 
 	public static void main(String[] args) {
 		System.out.println("Hello, World!");
-		Repository r = new Repository();
-		System.out.println(r);
-		System.out.println(args[0]);
+		System.out.println(new Repository());
+		if (args.length > 0) {
+			System.out.println(args[0]);
+		}
 	}
 
 }
