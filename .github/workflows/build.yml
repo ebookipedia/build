@@ -22,4 +22,4 @@ jobs:
         git config --global user.email 'hiebra@hotmail.com'
         git add target/build.jar
         git commit -am "Automated build"
-        git push
+        git push origin
