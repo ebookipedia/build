@@ -1,2 +1,2 @@
-# Java (Maven) ebookipedia code
-This code is autocatically built on each push
+# Java (Maven) eBookipedia code
+This code is autocatically built for each push
