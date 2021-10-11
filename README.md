@@ -1,2 +1,2 @@
 # Java (Maven) eBookipedia code
-This code is autocatically built for each push
+This code is autocatically built on commit
