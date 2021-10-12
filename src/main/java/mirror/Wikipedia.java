@@ -2,8 +2,6 @@ package mirror;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -19,67 +16,52 @@ import com.ibm.icu.util.ULocale;
 
 public class Wikipedia implements Runnable {
 
-	private Element excerpt;
-	private ULocale locale;
-	private List<Element> alternates = new ArrayList<>();
-	private String title;
+	Languages languages = new Languages();
+	Element body;
+	Repository repository;
+	String language;
+	String article;
 	
-	private Wikipedia(String repository) {
-		excerpt = parse().getDocumentElement();
-		if (excerpt.getTagName().equals("html")) {
-			NodeList list = excerpt.getElementsByTagName("head");
-			if (list.getLength() > 0) {
-				list = list.item(0).getChildNodes();
-				for (int i = 0; i < list.getLength(); i++) {
-					Node node = list.item(i);
-					if (!(node instanceof Element)) {
-						continue;
-					}
-					Element item = (Element) node;
-					if (item.getTagName().equals("link")) {
-						String rel = item.getAttribute("rel");
-						if ("".equals(rel)) {
-							throw new IllegalArgumentException("A link tag was found on head without a rel attribute");
-						} else if ("alternate".equals(rel)) {
-							alternates.add(item);
-						}
-					} else if (item.getTagName().equals("title")) {
-						title = item.getTextContent();
-					}
-				}
+	private Wikipedia(String name) {
+		Element root = parse().getDocumentElement();
+		Head head = null;
+		if (root.getTagName().equals("html")) {
+			head = new Head(root);
+			NodeList nodes = root.getElementsByTagName("body");
+			if (nodes.getLength() != 1) {
+				throw new IllegalStateException("The HTML document does not contain a <body>");
 			}
+			body = (Element) nodes.item(0);
+		} else if (root.getTagName().equals("body")) {
+			body = root;
+		} else {
+			throw new IllegalStateException("The root element is not supported: <" + root.getTagName() + '>');
 		}
-		String code = excerpt.getAttribute("lang");
-		if (title == null && "".equals(code)) {
-			int index = repository.indexOf('/');
-			if (index == -1) {
-				throw new IllegalArgumentException("Invalid repository name");
-			}
-			String owner = repository.substring(0, index);
-			repository = repository.substring(index + 1);
-			index = owner.indexOf('-');
-			if (index == -1) {
-				throw new IllegalStateException("The repository owner was expected to carry title and lang information not provided on excerpt.html");
-			}
-			String language = owner.substring(index + 1);
-			ULocale loc = new ULocale(language);
-			System.out.println(loc);
-			System.out.println(loc.getDisplayLanguage());
-			System.out.println(loc.getLanguage());
-			System.out.println(loc.getDisplayName());
+		boolean omittedTitle = head == null || head.title == null;
+		language = root.getAttribute("lang");
+		boolean omittedLang = "".equals(language);
+		if (omittedLang && omittedTitle) {
+			repository = new Repository(name, languages);
+			language = this.repository.language;
+			article = this.repository.article;
+		} else if (omittedTitle) {
+			throw new IllegalStateException("If 'lang' is specified <title> must be specified too");
+		} else if (omittedLang) {
+			language = "en";
+			article = head.title;
+		} else if (languages.contains(language)) {
+			article = head.title;
+			repository = new Repository(name, null);
+		} else {
+			throw new IllegalStateException("The value specificed as attribute 'lang' at the root element is not valid: " + language);
 		}
-		
-		
-		
-		language = new ULocale("".equals(attribute)? "en" : attribute);
-		ULocale.setDefault(language);
+		ULocale.setDefault(new ULocale(language));
 	}
 	
 	public static void main(String[] arguments) {
-		System.out.println(System.getProperty("user.dir"));
 		arguments = new String[]{"Abiogenesis-en/mirror"};
-		String repository = arguments[0];
-		new Wikipedia(repository).run();
+		String name = arguments[0];
+		new Wikipedia(name).run();
 	}
 	
 	Document parse() {
