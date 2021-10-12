@@ -17,7 +17,11 @@ public class Output {
 	public static void url(String content) {
 		print(new File(ROOT, "url"), content);
 	}
-	
+
+	public static void target(String content) {
+		print(new File(ROOT, "target"), content);		
+	}
+
 	private static void print(File file, String content) {
 		file.getParentFile().mkdirs();
 		try (OutputStream out = new FileOutputStream(file)) {
