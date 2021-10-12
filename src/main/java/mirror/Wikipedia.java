@@ -7,16 +7,22 @@ public class Wikipedia {
 	}
 
 	/**
-	 * This command should be invoked on each change on the excerpt.html
-	 * @param args One only element with the Github repository name hosting the
-	 *             eBook-friendly Wikipedia article mirror
+	 * This command should be invoked from a Github action for each change of the
+	 * editable/excerpt.html file of a repository based on the Github template
+	 * ebookipedia/wikipedia
+	 * 
+	 * @param args An array with one only item having the value of the
+	 *             GITHUB_REPOSITORY variable
 	 */
-	public static void main(String[] args) {
-		String[] parameters = args.length == 0 ? new String[] { "Abiogenesis-en/mirror" } : args;
+	public static void main(String[] parameters) {
 		if (parameters.length == 1) {
-			new com.softalks.ebookipedia.Wikipedia(parameters[0]);
+			String mirror = parameters[0];
+			Runnable build = new com.softalks.ebookipedia.Wikipedia(mirror);
+			build.run();
+		} else {
+			String error = "Parameter missing: GITHUB_REPOSITORY";
+			throw new IllegalStateException(error);
 		}
-		throw new IllegalStateException("Parameter missing: Github repository name ($GITHUB_REPOSITORY)");
 	}
 
 }

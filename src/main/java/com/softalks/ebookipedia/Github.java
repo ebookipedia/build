@@ -17,6 +17,7 @@ class Github extends Repository {
 			if (languageCodes.contains(suffix)) {
 				languageCode = suffix;
 				article = owner.substring(0, index);
+				return;
 			} 
 		}
 		throw new IllegalArgumentException("repository: " + repository);

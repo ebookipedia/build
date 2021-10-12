@@ -12,14 +12,14 @@ public class Output {
 		// SONAR mandatory
 	}
 	
-	private static final File IO = new File("out");
+	private static final File ROOT = new File("out");
 	
 	public static void url(String content) {
-		print(new File(IO, content), content);
+		print(new File(ROOT, "url"), content);
 	}
 	
 	private static void print(File file, String content) {
-		file.mkdirs();
+		file.getParentFile().mkdirs();
 		try (OutputStream out = new FileOutputStream(file)) {
 			out.write(content.getBytes(StandardCharsets.UTF_8));
 		} catch (IOException e) {
