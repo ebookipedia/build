@@ -14,4 +14,14 @@ public class Repository {
 		this.name = name.substring(index + 1);
 	}
 	
+	public Repository(String owner, String name) {
+		this.owner = owner;
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return owner + "/" + name;
+	}
+	
 }

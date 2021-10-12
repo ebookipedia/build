@@ -14,14 +14,10 @@ public class Output {
 	
 	private static final File ROOT = new File("out");
 	
-	public static void url(String content) {
-		print(new File(ROOT, "url"), content);
+	public static void print(String variable, Object value) {
+		print(new File(ROOT, variable), value.toString());
 	}
-
-	public static void target(String content) {
-		print(new File(ROOT, "target"), content);		
-	}
-
+	
 	private static void print(File file, String content) {
 		file.getParentFile().mkdirs();
 		try (OutputStream out = new FileOutputStream(file)) {

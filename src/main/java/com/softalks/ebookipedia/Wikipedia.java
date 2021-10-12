@@ -1,5 +1,7 @@
 package com.softalks.ebookipedia;
 
+import static com.softalks.ebookipedia.Output.print;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -57,7 +59,7 @@ public class Wikipedia implements Runnable {
 	@Override
 	public void run() {
 		ULocale.setDefault(new ULocale(language));
-		Output.url("https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));		
+		print("url", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));		
 	}
 
 }
