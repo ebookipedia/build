@@ -1,6 +1,7 @@
 package repository;
 
 import static com.softalks.ebookipedia.Output.print;
+import static java.lang.System.out;
 
 import java.io.IOException;
 
@@ -24,18 +25,16 @@ public class Target {
 	 *             GITHUB_REPOSITORY variable
 	 */
 	public static void main(String[] args) {
-		if (args.length == 0) {
-			//args = new String[]{"Abiogenesis-en/wikipedia"};
-			args = new String[]{"hiebra/oauth"};
-		}
+		out.print("processing starting ...");
 		Repository source = new Repository(args[0]);
 		String owner = source.owner;
 		Repository target = new Repository(owner, owner + ".github.io");
 		print("target", target);
 		GitHub account;
 		try {
-//			account = GitHub.connect("hiebra@hotmail.com", "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");
+			out.println("connecting to Github ...");
 			account = GitHubBuilder.fromEnvironment().build();
+			out.println("connected");
 		} catch (IOException e) {
 			throw new IllegalStateException(e.getMessage(), e);
 		}
@@ -47,14 +46,20 @@ public class Target {
 		}
 		try {
 			if (organization == null) {
+				out.println("Not an organization. Getting account's repository " + target.name + " ...");
 				account.getRepository(target.toString());	
 			} else {
+				out.println("Getting organization's repository " + target.name + " ...");
 				organization.getRepository(target.toString());	
 			}
+			out.print("found!");
 		} catch (IOException e) {
+			out.println("Not found. Getting repository " + target.name + " ...");
 			GHCreateRepositoryBuilder newRepository = getBuilder(account, organization, target.name);
-			create(newRepository);	
+			create(newRepository);
+			out.print("created!");
 		}
+		out.print("processing ended");
 	}
 	
 	private static GHCreateRepositoryBuilder getBuilder(GitHub account, GHOrganization organization, String name) {
