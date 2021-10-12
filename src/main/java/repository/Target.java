@@ -1,7 +1,7 @@
 package repository;
 
 import static com.softalks.ebookipedia.Output.print;
-import static java.lang.System.out;
+import static java.lang.System.*;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class Target {
 	 *             GITHUB_REPOSITORY variable
 	 */
 	public static void main(String[] args) {
-		out.print("processing starting ...");
+		out.print("Java processing starting ...");
 		Repository source = new Repository(args[0]);
 		String owner = source.owner;
 		Repository target = new Repository(owner, owner + ".github.io");
@@ -50,16 +50,18 @@ public class Target {
 				account.getRepository(target.toString());	
 			} else {
 				out.println("Getting organization's repository " + target.name + " ...");
-				organization.getRepository(target.toString());	
+				if (organization.getRepository(target.toString()) == null) {
+					throw new IOException();
+				}
 			}
-			out.print("found!");
+			out.print("The repository has been found");
 		} catch (IOException e) {
-			out.println("Not found. Getting repository " + target.name + " ...");
+			out.println("Not found. Creating repository " + target.name + " ...");
 			GHCreateRepositoryBuilder newRepository = getBuilder(account, organization, target.name);
 			create(newRepository);
-			out.print("created!");
+			out.println("The repository has been created");
 		}
-		out.print("processing ended");
+		out.println("Java processing ended");
 	}
 	
 	private static GHCreateRepositoryBuilder getBuilder(GitHub account, GHOrganization organization, String name) {
@@ -67,8 +69,7 @@ public class Target {
 			return account.createRepository(name);
 		} else {
 			return organization.createRepository(name);
-		}
-		
+		}	
 	}
 	
 	private static GHRepository create(GHCreateRepositoryBuilder builder) {
