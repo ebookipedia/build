@@ -1,4 +1,4 @@
-package mirror;
+package com.softalks.ebookipedia;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,16 +9,17 @@ import org.w3c.dom.NodeList;
 
 class Head {
 	
-	Map<String, Element> translations = new HashMap<>();
-	
-	String title;
+	final Map<String, Element> translations = new HashMap<>();
+	final String title;
 	
 	Head(Element html) {
 		NodeList nodes = html.getElementsByTagName("head");
 		if (nodes.getLength() == 0) {
+			title = null;
 			return;
 		}
 		nodes = nodes.item(0).getChildNodes();
+		String iTitle = null;
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Node node = nodes.item(i);
 			if (!(node instanceof Element)) {
@@ -36,11 +37,12 @@ class Head {
 					throw new IllegalArgumentException("One of the <head> child <link> elements is not supported: child #" + (i + 1));
 				}
 			} else if (name.equals("title")) {
-				title = element.getTextContent();
+				iTitle = element.getTextContent();
 			} else {
 				throw new IllegalArgumentException("One of the <head> child elements is not supported: child #" + (i + 1));
 			}
-		}		
+		}
+		title = iTitle;
 	}
 	
 }
