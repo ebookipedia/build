@@ -13,9 +13,9 @@ import com.ibm.icu.util.ULocale;
 import com.softalks.github.Repository;
 
 /**
- * @see updated.Excerpt
+ * @see updated.Summary
  */
-public class Build implements Runnable {
+public class SummaryUpdateResponse implements Runnable {
 
 	private final Iso639v1 languageCodes = new Iso639v1();
 	@SuppressWarnings("unused")
@@ -26,7 +26,7 @@ public class Build implements Runnable {
 	private final String article;
 	private final Head head;
 	
-	public Build(String githubRepositoryName) {
+	public SummaryUpdateResponse(String githubRepositoryName) {
 		Element root = Input.excerpt().getDocumentElement();
 		if (root.getTagName().equals("html")) {
 			head = new Head(root);

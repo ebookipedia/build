@@ -1,10 +1,10 @@
 package updated;
 
-import com.softalks.ebookipedia.Build;
+import com.softalks.ebookipedia.SummaryUpdateResponse;
 
-public class Excerpt {
+public class Summary {
 
-	private Excerpt() {
+	private Summary() {
 		// SONAR mandatory
 	}
 
@@ -19,8 +19,8 @@ public class Excerpt {
 	public static void main(String[] parameters) {
 		if (parameters.length == 1) {
 			String mirror = parameters[0];
-			Runnable build = new Build(mirror);
-			build.run();
+			Runnable response = new SummaryUpdateResponse(mirror);
+			response.run();
 		} else {
 			String error = "Parameter missing: GITHUB_REPOSITORY";
 			throw new IllegalStateException(error);
