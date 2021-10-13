@@ -63,7 +63,8 @@ public class Build implements Runnable {
 	@Override
 	public void run() {
 		ULocale.setDefault(new ULocale(language));
-		print("mirrored-article", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));
+		print("url", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));
+		print("title", article);
 		try (OutputStream output = new FileOutputStream("docs/excerpt.html")) {
 			output.write(String.valueOf(System.currentTimeMillis()).getBytes());
 		} catch (IOException e) {
