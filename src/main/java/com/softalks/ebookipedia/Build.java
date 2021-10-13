@@ -15,7 +15,7 @@ import com.softalks.github.Repository;
 /**
  * @see updated.Excerpt
  */
-public class Wikipedia implements Runnable {
+public class Build implements Runnable {
 
 	private final Iso639v1 languageCodes = new Iso639v1();
 	@SuppressWarnings("unused")
@@ -26,7 +26,7 @@ public class Wikipedia implements Runnable {
 	private final String article;
 	private final Head head;
 	
-	public Wikipedia(String githubRepositoryName) {
+	public Build(String githubRepositoryName) {
 		Element root = Input.excerpt().getDocumentElement();
 		if (root.getTagName().equals("html")) {
 			head = new Head(root);

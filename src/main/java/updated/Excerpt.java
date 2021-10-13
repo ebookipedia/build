@@ -1,5 +1,7 @@
 package updated;
 
+import com.softalks.ebookipedia.Build;
+
 public class Excerpt {
 
 	private Excerpt() {
@@ -17,7 +19,7 @@ public class Excerpt {
 	public static void main(String[] parameters) {
 		if (parameters.length == 1) {
 			String mirror = parameters[0];
-			Runnable build = new com.softalks.ebookipedia.Wikipedia(mirror);
+			Runnable build = new Build(mirror);
 			build.run();
 		} else {
 			String error = "Parameter missing: GITHUB_REPOSITORY";
