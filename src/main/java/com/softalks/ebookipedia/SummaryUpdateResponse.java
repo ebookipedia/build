@@ -27,7 +27,7 @@ public class SummaryUpdateResponse implements Runnable {
 	private final Head head;
 	
 	public SummaryUpdateResponse(String githubRepositoryName) {
-		Element root = Input.excerpt().getDocumentElement();
+		Element root = Input.summary().getDocumentElement();
 		if (root.getTagName().equals("html")) {
 			head = new Head(root);
 			NodeList nodes = root.getElementsByTagName("body");

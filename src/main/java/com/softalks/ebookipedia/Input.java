@@ -17,8 +17,8 @@ public class Input {
 		// SONAR mandatory
 	}
 	
-	static Document excerpt() {
-		File file = new File("editable/excerpt.html");
+	static Document summary() {
+		File file = new File("editable/summary.html");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
