@@ -25,16 +25,16 @@ public class Target {
 	 *             GITHUB_REPOSITORY variable
 	 */
 	public static void main(String[] args) {
-		out.print("Java processing starting ...");
+		out.println("Java processing starting ...");
 		Repository source = new Repository(args[0]);
 		String owner = source.owner;
 		Repository target = new Repository(owner, owner + ".github.io");
 		print("target", target);
 		GitHub account;
 		try {
-			out.println("connecting to Github ...");
+			out.println("Connecting to Github ...");
 			account = GitHubBuilder.fromEnvironment().build();
-			out.println("connected");
+			out.println("Connected");
 		} catch (IOException e) {
 			throw new IllegalStateException(e.getMessage(), e);
 		}

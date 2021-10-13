@@ -1,8 +1,8 @@
-package mirror;
+package updated;
 
-public class Wikipedia {
+public class Excerpt {
 
-	private Wikipedia() {
+	private Excerpt() {
 		// SONAR mandatory
 	}
 

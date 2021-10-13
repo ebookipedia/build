@@ -12,7 +12,7 @@ public class Output {
 		// SONAR mandatory
 	}
 	
-	private static final File ROOT = new File("out");
+	private static final File ROOT = new File(".java-generated");
 	
 	public static void print(String variable, Object value) {
 		print(new File(ROOT, variable), value.toString());

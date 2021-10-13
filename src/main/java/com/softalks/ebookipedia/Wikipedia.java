@@ -2,6 +2,10 @@ package com.softalks.ebookipedia;
 
 import static com.softalks.ebookipedia.Output.print;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -9,7 +13,7 @@ import com.ibm.icu.util.ULocale;
 import com.softalks.github.Repository;
 
 /**
- * @see mirror.Wikipedia
+ * @see updated.Excerpt
  */
 public class Wikipedia implements Runnable {
 
@@ -59,7 +63,12 @@ public class Wikipedia implements Runnable {
 	@Override
 	public void run() {
 		ULocale.setDefault(new ULocale(language));
-		print("url", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));		
+		print("mirrored-article", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));
+		try (OutputStream output = new FileOutputStream("docs/excerpt.html")) {
+			output.write("Hello, World!".getBytes());
+		} catch (IOException e) {
+			throw new IllegalStateException(e.getMessage(), e);
+		}
 	}
 
 }
