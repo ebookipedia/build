@@ -65,7 +65,7 @@ public class SummaryUpdateResponse implements Runnable {
 		ULocale.setDefault(new ULocale(language));
 		print("url", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));
 		print("title", article);
-		try (OutputStream output = new FileOutputStream("docs/excerpt.html")) {
+		try (OutputStream output = new FileOutputStream("docs/summary.html")) {
 			output.write(String.valueOf(System.currentTimeMillis()).getBytes());
 		} catch (IOException e) {
 			throw new IllegalStateException(e.getMessage(), e);
