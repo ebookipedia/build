@@ -65,7 +65,7 @@ public class Wikipedia implements Runnable {
 		ULocale.setDefault(new ULocale(language));
 		print("mirrored-article", "https://" + language + ".wikipedia.org/wiki/" + article.replace(' ', '_'));
 		try (OutputStream output = new FileOutputStream("docs/excerpt.html")) {
-			output.write("Hello, World!".getBytes());
+			output.write(String.valueOf(System.currentTimeMillis()).getBytes());
 		} catch (IOException e) {
 			throw new IllegalStateException(e.getMessage(), e);
 		}
