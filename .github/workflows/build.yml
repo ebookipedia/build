@@ -13,7 +13,9 @@ jobs:
         cache: maven
     - run: mvn --batch-mode --update-snapshots verify
     #- run: gh auth login --with-token ${{secrets.GITHUB_TOKEN}}
-    - run: gh auth login
+    - run: |
+        echo ${{secrets.GITHUB_TOKEN}} > token
+        gh auth login --with-token < token
     - run: gh release create v1.0 target/build.jar
     # - run: cp target/build.jar docs
     - uses: actions/upload-artifact@v2
