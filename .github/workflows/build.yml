@@ -12,7 +12,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - run: mvn --batch-mode --update-snapshots verify
-    - run: gh-release create v1.0 target/build.jar
+    - run: gh release create v1.0 target/build.jar
     # - run: cp target/build.jar docs
     - uses: actions/upload-artifact@v2
       with:
