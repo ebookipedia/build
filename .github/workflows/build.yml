@@ -12,7 +12,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build
-      run: mvn --batch-mode --update-snapshots verify
+      run: mvn --batch-mode --update-snapshots deploy
     - name: Release
       run: |
         echo ${{secrets.GITHUB_TOKEN}} > token
