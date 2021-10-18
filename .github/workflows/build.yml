@@ -11,8 +11,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-    - run: mvn --batch-mode --update-snapshots verify
-    - run: gh release create v1.0 target/build.jar
+    - run: |
+        mvn --batch-mode --update-snapshots verify
+        gh auth login --with-token ${{secrets.GITHUB_TOKEN}}
+        gh release create v1.0 target/build.jar
     # - run: cp target/build.jar docs
     - uses: actions/upload-artifact@v2
       with:
