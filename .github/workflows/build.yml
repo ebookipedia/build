@@ -12,14 +12,15 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - run: mvn --batch-mode --update-snapshots verify
-    - run: cp target/build.jar docs
+    - run: gh-release create v1.0 target/build.jar
+    # - run: cp target/build.jar docs
     - uses: actions/upload-artifact@v2
       with:
          name: Package
-         path: docs/build.jar
-    - run: |
-        git config --global user.name 'Santiago Ruiz'
-        git config --global user.email 'hiebra@hotmail.com'
-        git add docs/build.jar
-        git commit -am "Automated build"
-        git push
+         path: target/build.jar
+    # - run: |
+        # git config --global user.name 'Santiago Ruiz'
+        # git config --global user.email 'hiebra@hotmail.com'
+        # git add docs/build.jar
+        # git commit -am "Automated build"
+        # git push
