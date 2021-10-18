@@ -17,7 +17,7 @@ jobs:
       run: |
         echo ${{secrets.GITHUB_TOKEN}} > token
         gh auth login --with-token < token
-        gh release create v1.0 target/build.jar
+        gh release create "v$(<target/classes/version.txt)" target/build.jar
     - uses: actions/upload-artifact@v2
       with:
          name: Package
