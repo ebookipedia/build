@@ -22,14 +22,19 @@ jobs:
       with:
          name: jar
          path: target/build.jar
-    - uses: actions/checkout@v2
+    - name: Checking out ebookipedia/exe
+      uses: actions/checkout@v2
       with:
           repository: ebookipedia/exe
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-    - uses: actions/download-artifact@v2
+    - name: Display structure of checked out files
+      run: ls -R
+    - name: Downloading build.jar into docs/ebookipedia.jar
+      uses: actions/download-artifact@v2
       with:
         name: jar
+        path: docs/ebookipedia.jar
     - name: Display structure of downloaded files
       run: ls -R
     - name: Commit & Push changes
