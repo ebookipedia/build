@@ -12,7 +12,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build
-      run: mvn -Dgithub.user=hiebra -Dgithub.token=${{secrets.GITHUB_TOKEN}} clean deploy
+      run: mvn -Dgithub.user=hiebra -Dgithub.token=${{secrets.GITHUB_TOKEN}} deploy
     # - name: Release
     #  run: |
     #    echo ${{secrets.GITHUB_TOKEN}} > token
@@ -22,6 +22,10 @@ jobs:
       with:
          name: Package
          path: target/build.jar
+    - uses: actions/checkout@v2
+      with:
+          name: ebookiepdia/exe
+    - run: ls
     # - run: |
         # git config --global user.name 'Santiago Ruiz'
         # git config --global user.email 'hiebra@hotmail.com'
