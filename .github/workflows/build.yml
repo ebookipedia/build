@@ -30,18 +30,19 @@ jobs:
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
     - name: Display structure of checked out files
       run: ls -R
-    - name: Downloading build.jar into docs/ebookipedia.jar
+    - name: Downloading build.jar into ./docs
       uses: actions/download-artifact@v2
       with:
         name: jar
         path: docs
     - name: Display structure of downloaded files
-      run: ls -R
+      run: |
+        ls -R
+        jar tf ./docs/build.jar
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.DEPLOYMENT }}
-
     # - run: |
         # git config --global user.name 'Santiago Ruiz'
         # git config --global user.email 'hiebra@hotmail.com'
