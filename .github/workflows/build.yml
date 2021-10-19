@@ -22,14 +22,24 @@ jobs:
       with:
          name: jar
          path: target/build.jar
+    - name: Display structure of checked out files
+      run: ls -R
+    # - run: |
+        # git config --global user.name 'Santiago Ruiz'
+        # git config --global user.email 'hiebra@hotmail.com'
+        # git add docs/build.jar
+        # git commit -am "Automated build"
+        # git push
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
     - name: Checking out ebookipedia/exe
       uses: actions/checkout@v2
       with:
           repository: ebookipedia/exe
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-    - name: Display structure of checked out files
-      run: ls -R
     - name: Downloading build.jar into ./docs
       uses: actions/download-artifact@v2
       with:
@@ -43,9 +53,3 @@ jobs:
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.DEPLOYMENT }}
-    # - run: |
-        # git config --global user.name 'Santiago Ruiz'
-        # git config --global user.email 'hiebra@hotmail.com'
-        # git add docs/build.jar
-        # git commit -am "Automated build"
-        # git push
