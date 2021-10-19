@@ -20,12 +20,23 @@ jobs:
     #    gh release create "v$(<target/classes/version.txt)" target/build.jar
     - uses: actions/upload-artifact@v2
       with:
-         name: Package
+         name: jar
          path: target/build.jar
     - uses: actions/checkout@v2
       with:
           repository: ebookipedia/exe
-    - run: ls
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - uses: actions/download-artifact@v2
+      with:
+        name: jar
+    - name: Display structure of downloaded files
+      run: ls -R
+    - name: Commit & Push changes
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.DEPLOYMENT }}
+
     # - run: |
         # git config --global user.name 'Santiago Ruiz'
         # git config --global user.email 'hiebra@hotmail.com'
