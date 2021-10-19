@@ -8,6 +8,7 @@
   </activeProfiles>
 
   <profiles>
+    
     <profile>
       <id>library</id>
       <repositories>
@@ -19,6 +20,40 @@
           </snapshots>
         </repository>
       </repositories>
+    </profile>
+    
+    <profile>
+      <id>cli</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <archive>
+                    <manifest>
+                      <mainClass>
+                        mirror.Wikipedia
+                      </mainClass>
+                    </manifest>
+                  </archive>
+                  <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                  </descriptorRefs>
+                  <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+
     </profile>
   </profiles>
 
