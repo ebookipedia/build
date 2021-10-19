@@ -12,25 +12,14 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-    - name: Build
-      run: mvn -Dgithub.user=hiebra -Dgithub.token=${{secrets.GITHUB_TOKEN}} deploy
-    # - name: Release
-    #  run: |
-    #    echo ${{secrets.GITHUB_TOKEN}} > token
-    #    gh auth login --with-token < token
-    #    gh release create "v$(<target/classes/version.txt)" target/build.jar
+    - name: Build CLI
+      run: mvn -Pcli package
     - uses: actions/upload-artifact@v2
       with:
-         name: jar
-         path: target/build.jar
-    - name: Display structure of checked out files
-      run: ls -R
-    # - run: |
-        # git config --global user.name 'Santiago Ruiz'
-        # git config --global user.email 'hiebra@hotmail.com'
-        # git add docs/build.jar
-        # git commit -am "Automated build"
-        # git push
+         name: CLI
+         path: target/ebookipedia.jar
+    - name: Build API & deploy it as a Github Maven package
+      run: mvn -Papi -Dgithub.user=hiebra -Dgithub.token=${{secrets.GITHUB_TOKEN}} deploy
   deploy:
     name: Main (CLI) deployment
     runs-on: ubuntu-latest
@@ -45,12 +34,12 @@ jobs:
     - name: Downloading build.jar into ./docs
       uses: actions/download-artifact@v2
       with:
-        name: jar
+        name: CLI
         path: docs
     - name: Display structure of downloaded files
       run: |
         ls -R
-        jar tf ./docs/build.jar
+        jar tf ./docs/ebookipedia.jar
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
