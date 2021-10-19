@@ -24,7 +24,7 @@ jobs:
          path: target/build.jar
     - uses: actions/checkout@v2
       with:
-          name: ebookiepdia/exe
+          repository: ebookiepdia/exe
     - run: ls
     # - run: |
         # git config --global user.name 'Santiago Ruiz'
