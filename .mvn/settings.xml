@@ -4,13 +4,13 @@
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
   <activeProfiles>
-    <activeProfile>library</activeProfile>
+    <activeProfile>api</activeProfile>
   </activeProfiles>
 
   <profiles>
     
     <profile>
-      <id>library</id>
+      <id>api</id>
       <repositories>
         <repository>
           <id>github</id>
