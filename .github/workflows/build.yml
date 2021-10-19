@@ -3,7 +3,7 @@ on:
     branches: [ main ]
 jobs:
   build:
-    name: Build & deploy to Maven repository
+    name: Maven build & package deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
         # git commit -am "Automated build"
         # git push
   deploy:
-    name: Deploy to ebookipedia/exe
+    name: Main (CLI) deploy
     runs-on: ubuntu-latest
     needs: build
     steps:
